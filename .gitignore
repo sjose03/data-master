@@ -1,0 +1,7 @@
+data
+esdata
+hdfs
+*.ipynb
+MySql
+_dev*
+.ipynb_checkpoints
