@@ -8,7 +8,7 @@ FROM openjdk:${OPENJDK_VERSION}-${IMAGE_VARIANT}
 RUN apt-get update && apt-get install -y --no-install-recommends curl
 
 ##SPARK
-ENV SPARK_VERSION=3.2.1
+ENV SPARK_VERSION=3.2.2
 ENV SPARK_URL=https://www.apache.org/dist/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop2.7.tgz 
 
 RUN set -x \
