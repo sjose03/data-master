@@ -28,8 +28,6 @@ services:
       - ./scripts:/scripts
       - ./raw-data:/raw-data
       - ./hdfs:/opt/hadoop/hdfs
-    env_file:
-      - images/hadoop/.env
     user: root
     networks: 
       - data-master
