@@ -1,18 +1,6 @@
 version: "3"
 
 services:
-  mysqlsrv:
-    image: mysql:5.7
-    container_name: mongo
-    environment:
-      MYSQL_ROOT_PASSWORD: "12345678"
-      MYSQL_DATABASE: "mydb"
-    ports:
-      - "3306:3306"
-    volumes:
-      - ./MySql:/var/lib/mysql
-    networks:
-      - data-master
 
   hadoop:
     build: images/hadoop
@@ -25,13 +13,24 @@ services:
       - 9870:9870
       - 8020:8020
     volumes:
-      - ./scripts:/scripts
-      - ./raw-data:/raw-data
       - ./hdfs:/opt/hadoop/hdfs
     env_file:
       - images/hadoop/.env
     user: root
     networks: 
+      - data-master
+
+  mysqlsrv:
+    image: mysql:5.7
+    container_name: mongo
+    environment:
+      MYSQL_ROOT_PASSWORD: "12345678"
+      MYSQL_DATABASE: "mydb"
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./MySql:/var/lib/mysql
+    networks:
       - data-master
 
   mongo:
@@ -46,18 +45,6 @@ services:
     networks: 
       - data-master
         
-  jupyter_lab:
-    container_name: jupyter_lab
-    image: jupyter/pyspark-notebook:python-3.8.8
-    ports:
-      - "8888:8888"
-    environment:
-      - JUPYTER_ENABLE_LAB=yes
-      - JUPYTER_TOKEN=easy
-    volumes:
-      - .:/home/jovyan/work
-    networks:
-      - data-master
   zookeeper:
     image: confluentinc/cp-zookeeper:6.2.0
     restart: always
@@ -98,28 +85,6 @@ services:
       - kafka
       - zookeeper
 
-  spark-stream:
-    build: images/spark-stream
-    container_name: spark-stream
-    restart: always
-    networks: 
-      - data-master
-    depends_on:
-      - python-stream
-      - kafka
-
-  kafdrop:
-    image: obsidiandynamics/kafdrop:3.27.0
-    restart: always
-    container_name: kafkadrop
-    networks: 
-      - data-master
-    depends_on:
-      - kafka
-    ports:
-      - 19000:9000
-    environment:
-      - KAFKA_BROKERCONNECT=kafka:29092
   elasticsearch:
     container_name: elastic
     image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
@@ -148,6 +113,18 @@ services:
       - elasticsearch
     networks:
       - data-master
+
+  spark-stream:
+    build: images/spark-stream
+    container_name: spark-stream
+    restart: always
+    networks: 
+      - data-master
+    depends_on:
+      - python-stream
+      - kafka
+      - elasticsearch
+      - kibana
 
 volumes:
   esdata:
