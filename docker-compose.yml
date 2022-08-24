@@ -12,19 +12,6 @@ services:
       - ZOOKEEPER_TICK_TIME=2000
       - ALLOW_ANONYMOUS_LOGIN=yes
 
-  jupyter_lab:
-    container_name: jupyter_lab
-    image: jupyter/pyspark-notebook:python-3.8.8
-    ports:
-      - "8888:8888"
-    environment:
-      - JUPYTER_ENABLE_LAB=yes
-      - JUPYTER_TOKEN=easy
-    volumes:
-      - .:/home/jovyan/work
-    networks:
-      - data-master
-
   kafka:
     image: confluentinc/cp-kafka:6.2.0
     restart: always
