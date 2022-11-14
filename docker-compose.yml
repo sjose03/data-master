@@ -31,7 +31,7 @@ services:
       - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
       
   python-stream:
-    build: images/python-stream
+    image: sjose03/data_master_python_stream_mult_arch:1.0
     container_name: python-stream
     restart: always
     env_file:
@@ -43,7 +43,7 @@ services:
       - zookeeper
 
   spark-stream:
-    build: images/spark-stream
+    image: sjose03/data_master_spark_stream_mult_arch:1.0
     container_name: spark-stream
     restart: always
     networks: 
@@ -75,7 +75,7 @@ services:
       discovery.type: "single-node"
       ELASTIC_USERNAME: elastic
       ELASTIC_PASSWORD: "abcde"
-      ES_JAVA_OPTS: "-Xms2g -Xmx2g"
+      ES_JAVA_OPTS: "-Xms1g -Xmx1g"
     networks:
       - data-master
     volumes:
