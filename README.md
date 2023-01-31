@@ -264,7 +264,7 @@ docker-compose up -d .
 
 No seu navegador voce poderá acessar os seus containers através dos seguintes endereços:
 
-- [localhost:1900](http://localhost:19000) - Interface gráfica para analisar os tópicos do Kafka
+- [localhost:19000](http://localhost:19000) - Interface gráfica para analisar os tópicos do Kafka
 
 ![Untitled](img_readme/Untitled%207.png)
 
